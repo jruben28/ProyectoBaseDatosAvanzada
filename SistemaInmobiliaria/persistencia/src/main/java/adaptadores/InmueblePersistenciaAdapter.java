@@ -126,5 +126,21 @@ public class InmueblePersistenciaAdapter {
 
         return id.toHexString();
     }
+
+    public InmuebleMongoEntidad convertirAMongo(Inmueble inmueble) throws PersistenciaException{
+        if (inmueble == null) {
+            throw new PersistenciaException("No se puede agregar inmueble nulo.");
+        }
+        
+        InmuebleMongoEntidad entidadMongo = new InmuebleMongoEntidad();
+        
+        entidadMongo.setId(convertirStringAObjectId(inmueble.getId()));
+        entidadMongo.setDireccion(inmueble.getDireccion());
+        entidadMongo.setEstado(true);
+        entidadMongo.setRentaMensual(inmueble.getRentaMensual());
+        entidadMongo.setInquilino(null);
+        
+        return entidadMongo;
+    }
     
 }
