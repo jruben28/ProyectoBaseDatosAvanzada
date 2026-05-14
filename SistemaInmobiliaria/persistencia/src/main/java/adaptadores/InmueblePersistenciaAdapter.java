@@ -45,7 +45,7 @@ public class InmueblePersistenciaAdapter {
      * @param entidadMongo
      * @return 
      */
-    private Inmueble convertirADominio(InmuebleMongoEntidad entidadMongo) {
+    public Inmueble convertirADominio(InmuebleMongoEntidad entidadMongo) {
         if (entidadMongo == null) {
             return null;
         }
