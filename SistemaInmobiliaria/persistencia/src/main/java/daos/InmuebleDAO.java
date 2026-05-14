@@ -4,17 +4,33 @@
  */
 package daos;
 
+import adaptadores.InmueblePersistenciaAdapter;
+import com.mongodb.client.MongoCollection;
+import conexion.ConexionMongo;
 import dtos.ReporteInmuebleSinInquilino;
 import entidades.Inmueble;
 import entidades.Inquilino;
+import entidadesMongo.InmuebleMongoEntidad;
 import excepciones.PersistenciaException;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  *
  * @author joser
  */
 public class InmuebleDAO implements IInmuebleDAO{
+    private final MongoCollection<InmuebleMongoEntidad> coleccionInmuebles;
+    private final InmueblePersistenciaAdapter inmuebleAdapter;
+    
+    private static final Logger LOG = Logger.getLogger(InmuebleDAO.class.getName());
+
+    public InmuebleDAO() {
+        this.coleccionInmuebles = ConexionMongo.obtenerColeccionInmuebles();
+        this.inmuebleAdapter = new InmueblePersistenciaAdapter();
+    }
+    
+    
 
     @Override
     public List<ReporteInmuebleSinInquilino> listarInmueblesDisponibles() throws PersistenciaException {
