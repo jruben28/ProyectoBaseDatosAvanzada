@@ -17,21 +17,24 @@ public class InmuebleMongoEntidad {
     
     private String direccion;
     private String estado;
+    private String tipo;
     private String rentaMensual;
     private InquilinoMongoEntidad inquilino;
 
     /**
-     * Constructor con id de bson.
+     * Constructor con id.
      * @param id
      * @param direccion
      * @param estado
+     * @param tipo
      * @param rentaMensual
      * @param inquilino 
      */
-    public InmuebleMongoEntidad(ObjectId id, String direccion, String estado, String rentaMensual, InquilinoMongoEntidad inquilino) {
+    public InmuebleMongoEntidad(ObjectId id, String direccion, String estado, String tipo, String rentaMensual, InquilinoMongoEntidad inquilino) {
         this.id = id;
         this.direccion = direccion;
         this.estado = estado;
+        this.tipo = tipo;
         this.rentaMensual = rentaMensual;
         this.inquilino = inquilino;
     }
@@ -40,15 +43,26 @@ public class InmuebleMongoEntidad {
      * Constructor sin id.
      * @param direccion
      * @param estado
+     * @param tipo
      * @param rentaMensual
      * @param inquilino 
      */
-    public InmuebleMongoEntidad(String direccion, String estado, String rentaMensual, InquilinoMongoEntidad inquilino) {
+    public InmuebleMongoEntidad(String direccion, String estado, String tipo, String rentaMensual, InquilinoMongoEntidad inquilino) {
         this.direccion = direccion;
         this.estado = estado;
+        this.tipo = tipo;
         this.rentaMensual = rentaMensual;
         this.inquilino = inquilino;
     }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
 
     public InmuebleMongoEntidad() {
     }

@@ -12,6 +12,7 @@ public class Inmueble {
     private String id;
     private String direccion;
     private String estado;
+    private String tipo;
     private Float rentaMensual;
     Inquilino inquilino;
 
@@ -20,13 +21,15 @@ public class Inmueble {
      * @param id
      * @param direccion
      * @param estado
+     * @param tipo
      * @param rentaMensual
      * @param inquilino 
      */
-    public Inmueble(String id, String direccion, String estado, Float rentaMensual, Inquilino inquilino) {
+    public Inmueble(String id, String direccion, String estado, String tipo, Float rentaMensual, Inquilino inquilino) {
         this.id = id;
         this.direccion = direccion;
         this.estado = estado;
+        this.tipo = tipo;
         this.rentaMensual = rentaMensual;
         this.inquilino = inquilino;
     }
@@ -35,14 +38,24 @@ public class Inmueble {
      * Constructor sin id.
      * @param direccion
      * @param estado
+     * @param tipo
      * @param rentaMensual
      * @param inquilino 
      */
-    public Inmueble(String direccion, String estado, Float rentaMensual, Inquilino inquilino) {
+    public Inmueble(String direccion, String estado, String tipo, Float rentaMensual, Inquilino inquilino) {
         this.direccion = direccion;
         this.estado = estado;
+        this.tipo = tipo;
         this.rentaMensual = rentaMensual;
         this.inquilino = inquilino;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     /**
@@ -91,15 +104,15 @@ public class Inmueble {
         this.inquilino = inquilino;
     }
 
+    
     /**
      * Metodo to string.
      * @return 
      */
     @Override
     public String toString() {
-        return "Inmueble{" + "id=" + id + ", direccion=" + direccion + ", estado=" + estado + ", rentaMensual=" + rentaMensual + ", inquilino=" + inquilino + '}';
+        return "Inmueble{" + "id=" + id + ", direccion=" + direccion + ", estado=" + estado + ", tipo=" + tipo + ", rentaMensual=" + rentaMensual + ", inquilino=" + inquilino + '}';
     }
-    
     
     
     
