@@ -73,7 +73,6 @@ public class InmuebleBO implements IInmuebleBO{
             validarIdInmueble(idInmueble);
             validarInquilinoDTO(inquilinoDTO);
             Inquilino inquilino = inmuebleAdapter.inquilinoDTOAEntidad(inquilinoDTO);
-            
             return inmuebleDAO.registrarInquilino(idInmueble, inquilino);
         }
         catch(PersistenciaException ex){
