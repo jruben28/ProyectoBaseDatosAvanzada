@@ -21,7 +21,7 @@ public interface IInmuebleDAO {
      * @return lista con inmuebles sin inquilino
      * @throws PersistenciaException 
      */
-    List<ReporteInmuebleSinInquilino> listarInmueblesDisponibles() throws PersistenciaException;
+    List<Inmueble> listarInmueblesDisponibles() throws PersistenciaException;
     
     /**
      * Obtiene el inmueble buscado según su id.
@@ -38,7 +38,13 @@ public interface IInmuebleDAO {
      * @return
      * @throws PersistenciaException 
      */
-    public Inmueble registrarInquilino(String idInmueble, Inquilino inquilino) throws PersistenciaException;
+    public boolean registrarInquilino(String idInmueble, Inquilino inquilino) throws PersistenciaException;
     
-    
+    /**
+     * Registrar inmueble metodo de depuracion no tiene uso en caso de uso.
+     * @param inmueble
+     * @return
+     * @throws PersistenciaException 
+     */
+    public Inmueble registrarInmueble(Inmueble inmueble) throws PersistenciaException;
 }
