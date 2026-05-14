@@ -29,7 +29,7 @@ public class InmuebleBO implements IInmuebleBO{
     private final InmuebleNegocioAdapter inmuebleAdapter;
     private static final Logger LOG = Logger.getLogger(InmuebleBO.class.getName());
     
-
+    
     public InmuebleBO() {
         this.inmuebleDAO = new InmuebleDAO();
         this.inmuebleAdapter = new InmuebleNegocioAdapter();
