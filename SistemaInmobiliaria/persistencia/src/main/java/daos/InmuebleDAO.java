@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.persistence.PersistenceException;
 import org.bson.types.ObjectId;
 
 /**
@@ -167,7 +166,7 @@ public class InmuebleDAO implements IInmuebleDAO{
             return inmuebleAdapter.convertirADominio(entidadMongo);
         }
         catch(MongoException ex){
-            throw new PersistenceException("Error al registrar inmueble.");
+            throw new PersistenciaException("Error al registrar inmueble.");
         }
     }
     
