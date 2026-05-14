@@ -8,6 +8,7 @@ import adaptadores.InmueblePersistenciaAdapter;
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
 import com.mongodb.client.result.UpdateResult;
 import conexion.ConexionMongo;
@@ -126,7 +127,10 @@ public class InmuebleDAO implements IInmuebleDAO{
             
             UpdateResult resultado = coleccionInmuebles.updateOne(
                     eq("_id", id),
-                    set("inquilino", inquilinoMongo)
+                    combine(
+                            set("inquilino", inquilinoMongo),
+                            set("estado", false)
+                    )
             );
             
             LOG.log(Level.INFO, "Se agregó un inquilino en el inmueble.");

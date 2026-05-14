@@ -110,7 +110,7 @@ public class InmuebleDAOTest {
         InmuebleDAO instance = new InmuebleDAO();
         
         Inmueble inmueble1 = new Inmueble(
-                "Calle venado 120",
+                "AAAAAAAAA",
                 true,
                 "comercial",
                 5000.0f,
