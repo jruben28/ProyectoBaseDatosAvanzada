@@ -23,9 +23,9 @@ import org.bson.codecs.pojo.PojoCodecProvider;
  */
 public class ConexionMongo {
     private static final String URL = "mongodb://localhost:27017";
-        private static final String NOMBRE_BASE_DATOS = "guia_restaurantes";
-    private static final String COLECCION_INMOBILIARIA = "";
-    private static final String COLECCION_MANTENIMIENTO = "";
+        private static final String NOMBRE_BASE_DATOS = "inmobiliaria";
+    private static final String COLECCION_INMOBILIARIA = "inmuebles";
+    private static final String COLECCION_MANTENIMIENTO = "mantenimientos";
     
     private static MongoClient cliente;
     
