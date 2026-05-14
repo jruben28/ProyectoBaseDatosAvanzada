@@ -8,12 +8,69 @@ package dtos.comunes;
  *
  * @author joser
  */
-public record InquilinoDTO (
-        String nombres,
-        String apellidoPaterno,
-        String apellidoMaterno,
-        Float ingresoMensual,
-        String telefono
-        ) {
+public class InquilinoDTO {
+    String nombre;
+    String apellidoPaterno;
+    String apellidoMaterno;
+    Float ingresoMensual;
+    String telefono;
+
+    public InquilinoDTO(String nombre, String apellidoPaterno, String apellidoMaterno, Float ingresoMensual, String telefono) {
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.ingresoMensual = ingresoMensual;
+        this.telefono = telefono;
+    }
+
+    public InquilinoDTO() {
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
+    }
+
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
+    }
+
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
+    }
+
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
+    }
+
+    public Float getIngresoMensual() {
+        return ingresoMensual;
+    }
+
+    public void setIngresoMensual(Float ingresoMensual) {
+        this.ingresoMensual = ingresoMensual;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    @Override
+    public String toString() {
+        return "InquilinoDTO{" + "nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", ingresoMensual=" + ingresoMensual + ", telefono=" + telefono + '}';
+    }
+    
+    
     
 }
