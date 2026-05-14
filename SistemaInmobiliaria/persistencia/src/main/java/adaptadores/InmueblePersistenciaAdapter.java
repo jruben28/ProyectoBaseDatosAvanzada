@@ -136,6 +136,7 @@ public class InmueblePersistenciaAdapter {
         
         entidadMongo.setId(convertirStringAObjectId(inmueble.getId()));
         entidadMongo.setDireccion(inmueble.getDireccion());
+        entidadMongo.setTipo(inmueble.getTipo());
         entidadMongo.setEstado(true);
         entidadMongo.setRentaMensual(inmueble.getRentaMensual());
         entidadMongo.setInquilino(null);
