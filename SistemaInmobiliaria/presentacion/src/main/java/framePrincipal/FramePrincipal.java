@@ -159,9 +159,6 @@ public class FramePrincipal extends javax.swing.JFrame {
         cardLayout.show(contenedor, nombre);
     }
 
-    public void mostrarPanel(String panelPropiedades) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

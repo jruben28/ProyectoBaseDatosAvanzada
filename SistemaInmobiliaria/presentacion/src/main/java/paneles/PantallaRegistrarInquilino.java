@@ -127,7 +127,7 @@ public class PantallaRegistrarInquilino extends javax.swing.JPanel {
 
         btnCancelar.addActionListener(e -> {
             limpiarCampos();
-            frame.mostrarPanel("PanelGestorArrendamiento");
+            frame.cambiarPantalla("PanelGestorArrendamiento");
             
         });
 
