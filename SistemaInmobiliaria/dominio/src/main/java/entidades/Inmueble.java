@@ -80,13 +80,15 @@ public class Inmueble {
         this.direccion = direccion;
     }
 
-    public boolean getEstado() {
+    public boolean isEstado() {
         return estado;
     }
 
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
+
+
 
     public Float getRentaMensual() {
         return rentaMensual;
