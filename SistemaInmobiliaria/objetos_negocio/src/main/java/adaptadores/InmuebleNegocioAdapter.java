@@ -69,7 +69,7 @@ public class InmuebleNegocioAdapter {
         
         inquilino.setNombre(inquilinoDTO.getNombre());
         inquilino.setApellidoPaterno(inquilinoDTO.getApellidoPaterno());
-        inquilino.setApellidoMaterno(inquilino.getApellidoMaterno());
+        inquilino.setApellidoMaterno(inquilinoDTO.getApellidoMaterno());
         inquilino.setIngresoMensual(inquilinoDTO.getIngresoMensual());
         inquilino.setTelefono(inquilinoDTO.getTelefono());
         
