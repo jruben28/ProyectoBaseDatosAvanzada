@@ -11,7 +11,7 @@ package entidades;
 public class Inmueble {
     private String id;
     private String direccion;
-    private String estado;
+    private boolean estado;
     private String tipo;
     private Float rentaMensual;
     Inquilino inquilino;
@@ -25,7 +25,7 @@ public class Inmueble {
      * @param rentaMensual
      * @param inquilino 
      */
-    public Inmueble(String id, String direccion, String estado, String tipo, Float rentaMensual, Inquilino inquilino) {
+    public Inmueble(String id, String direccion, boolean estado, String tipo, Float rentaMensual, Inquilino inquilino) {
         this.id = id;
         this.direccion = direccion;
         this.estado = estado;
@@ -42,7 +42,7 @@ public class Inmueble {
      * @param rentaMensual
      * @param inquilino 
      */
-    public Inmueble(String direccion, String estado, String tipo, Float rentaMensual, Inquilino inquilino) {
+    public Inmueble(String direccion, boolean estado, String tipo, Float rentaMensual, Inquilino inquilino) {
         this.direccion = direccion;
         this.estado = estado;
         this.tipo = tipo;
@@ -80,11 +80,11 @@ public class Inmueble {
         this.direccion = direccion;
     }
 
-    public String getEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(boolean estado) {
         this.estado = estado;
     }
 

@@ -16,7 +16,7 @@ public class InmuebleMongoEntidad {
     private ObjectId id;
     
     private String direccion;
-    private String estado;
+    private boolean estado;
     private String tipo;
     private String rentaMensual;
     private InquilinoMongoEntidad inquilino;
@@ -30,7 +30,7 @@ public class InmuebleMongoEntidad {
      * @param rentaMensual
      * @param inquilino 
      */
-    public InmuebleMongoEntidad(ObjectId id, String direccion, String estado, String tipo, String rentaMensual, InquilinoMongoEntidad inquilino) {
+    public InmuebleMongoEntidad(ObjectId id, String direccion, boolean estado, String tipo, String rentaMensual, InquilinoMongoEntidad inquilino) {
         this.id = id;
         this.direccion = direccion;
         this.estado = estado;
@@ -47,7 +47,7 @@ public class InmuebleMongoEntidad {
      * @param rentaMensual
      * @param inquilino 
      */
-    public InmuebleMongoEntidad(String direccion, String estado, String tipo, String rentaMensual, InquilinoMongoEntidad inquilino) {
+    public InmuebleMongoEntidad(String direccion, boolean estado, String tipo, String rentaMensual, InquilinoMongoEntidad inquilino) {
         this.direccion = direccion;
         this.estado = estado;
         this.tipo = tipo;
@@ -83,11 +83,11 @@ public class InmuebleMongoEntidad {
         this.direccion = direccion;
     }
 
-    public String getEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(boolean estado) {
         this.estado = estado;
     }
 
