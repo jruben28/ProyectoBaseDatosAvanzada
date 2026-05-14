@@ -10,6 +10,7 @@
         <module>dominio</module>
         <module>dtos_negocio</module>
         <module>objetos_negocio</module>
+        <module>presentacion</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
