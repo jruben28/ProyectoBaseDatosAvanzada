@@ -115,10 +115,10 @@ public class FramePrincipal extends javax.swing.JFrame {
         cardLayout = new CardLayout();
         contenedor = new JPanel(cardLayout);
 
-        gestorArrendamiento = new PantallaGestorArrendamiento();
+        gestorArrendamiento = new PantallaGestorArrendamiento(this);
         generarOrden = new PantallaGenerarOrden();
         consultarSolicitudes = new PantallaConsultarSolicitudes();
-        registrarInquilino = new PantallaRegistrarInquilino();
+        registrarInquilino = new PantallaRegistrarInquilino(this);
 
         contenedor.add(gestorArrendamiento, "PanelGestorArrendamiento");
         contenedor.add(generarOrden, "PanelGenerarOrden");
@@ -150,11 +150,17 @@ public class FramePrincipal extends javax.swing.JFrame {
     
     
     public void irARegistroConDatos(InmuebleSalidaDTO dto) {
-        registrarInquilino.recibirDTO(dto);
-        cardLayout.show(contenedor, "PanelRegistrarInquilino"); // Cambiamos la vista
+        if (registrarInquilino != null) {
+            registrarInquilino.recibirDTO(dto); 
+            cardLayout.show(contenedor, "PanelRegistrarInquilino"); 
+        }
     }
     public void cambiarPantalla(String nombre) {
         cardLayout.show(contenedor, nombre);
+    }
+
+    public void mostrarPanel(String panelPropiedades) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

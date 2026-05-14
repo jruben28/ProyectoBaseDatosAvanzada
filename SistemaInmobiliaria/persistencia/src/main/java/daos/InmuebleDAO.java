@@ -132,8 +132,7 @@ public class InmuebleDAO implements IInmuebleDAO{
                             set("estado", false)
                     )
             );
-            
-            LOG.log(Level.INFO, "Se agregó un inquilino en el inmueble.");
+            LOG.log(Level.INFO, "Se agregó un inquilino en el inmueble. ");
             return resultado.getModifiedCount() > 0;
             
             

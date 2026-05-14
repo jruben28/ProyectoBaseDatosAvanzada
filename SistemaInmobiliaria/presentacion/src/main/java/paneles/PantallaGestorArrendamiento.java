@@ -36,8 +36,9 @@ public class PantallaGestorArrendamiento extends javax.swing.JPanel {
     
     /**
      * Creates new form PantallaGestorArrendamiento
+     * @param frame
      */
-    public PantallaGestorArrendamiento() {
+    public PantallaGestorArrendamiento(FramePrincipal frame) {
         this.frame = frame;
         setLayout(null);
         setBackground(new Color(211, 211, 211));
@@ -131,13 +132,6 @@ public class PantallaGestorArrendamiento extends javax.swing.JPanel {
         add(btnRegistrar);
         
         
-        btnRegistrar.addActionListener(e -> {
-            frame.irARegistroConDatos(inmuebleSeleccionado);
-        
-        });
-        
-        
-        
         cbPropiedades.addActionListener(e -> {
             
             
@@ -148,6 +142,11 @@ public class PantallaGestorArrendamiento extends javax.swing.JPanel {
             lblDireccionDato.setText(inmueble.direccion());
             lblRentaDato.setText(inmueble.rentaMensual().toString());
 
+        });
+        
+        btnRegistrar.addActionListener(e -> {
+            frame.irARegistroConDatos(inmuebleSeleccionado);
+        
         });
     }
     
