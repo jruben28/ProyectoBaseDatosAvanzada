@@ -20,5 +20,10 @@
             <version>5.2.0</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>dominio</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>
