@@ -113,7 +113,4 @@ public class Inmueble {
     public String toString() {
         return "Inmueble{" + "id=" + id + ", direccion=" + direccion + ", estado=" + estado + ", tipo=" + tipo + ", rentaMensual=" + rentaMensual + ", inquilino=" + inquilino + '}';
     }
-    
-    
-    
 }
