@@ -65,7 +65,7 @@ public class ContratoDAO implements IContratoDAO{
 
         try {
             UpdateResult resultado = coleccionContratos.updateOne(
-                    eq("_id", id),
+                    eq("idInmueble", id),
                     combine(
                             set("fechaFin", contrato.getFechaFin()),
                             set("adeudo", contrato.getAdeudo()),
@@ -74,7 +74,6 @@ public class ContratoDAO implements IContratoDAO{
                     )
             );
             
-            System.out.println("llegamos aca" + (resultado.getModifiedCount() > 0));
             return resultado.getModifiedCount() > 0;
 
         } catch (MongoException ex) {

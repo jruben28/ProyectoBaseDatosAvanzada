@@ -59,7 +59,7 @@ public class MantenimientoBO implements IMantenimientoBO{
     public boolean finalizarMantenimiento(MantenimientoDTO mantenimientoDTO) throws NegocioException {
         try{
             //validar dto
-            validarCamposMantenimientoDTO(mantenimientoDTO);
+            //validarCamposMantenimientoDTO(mantenimientoDTO);
             return mantenimientoDAO.finalizarMantenimiento(mantenimientoAdapter.DTOAEntidad(mantenimientoDTO));
         }
         catch(PersistenciaException ex){
@@ -102,11 +102,7 @@ public class MantenimientoBO implements IMantenimientoBO{
         String estado = mantenimiento.getEstado();
         Float costo = mantenimiento.getCosto();
         
-        // 1. Validación de campos obligatorios (Strings)
-        // Verificamos que no sean nulos y que no estén vacíos tras quitar espacios
-        if (mantenimiento.getIdInmueble() == null || mantenimiento.getIdInmueble().isEmpty()) {
-            throw new IllegalArgumentException("El ID del inmueble es obligatorio.");
-        }
+
         if (descripcion == null || descripcion.trim().isEmpty()) {
             throw new IllegalArgumentException("La descripción es obligatoria.");
         }

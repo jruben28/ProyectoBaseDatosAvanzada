@@ -4,6 +4,7 @@
  */
 package paneles;
 
+import dtos.comunes.MantenimientoDTO;
 import dtos.salida.InmuebleSalidaDTO;
 import dtos.salida.MantenimientoSalidaDTO;
 import excepcion.NegocioException;
@@ -13,12 +14,17 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import objetosNegocio.IInmuebleBO;
 import objetosNegocio.IMantenimientoBO;
+import objetosNegocio.InmuebleBO;
 import objetosNegocio.MantenimientoBO;
 
 /**
@@ -28,14 +34,16 @@ import objetosNegocio.MantenimientoBO;
 public class PantallaSolicitudPendientes extends javax.swing.JPanel {
     FramePrincipal framePrincipal;
     ControlObjetos controlObjetos;
-    
-    public JTable tablaSolicitudes;
-    public DefaultTableModel modeloTabla;
-    public JButton btnSeleccionar;
-    
+
+    public JComboBox<MantenimientoSalidaDTO> cbSolicitudes;
+    public JTextField txtDireccion;
+    public JTextField txtDescripcion;
+    public JTextArea txtNotasAdicionales;
+    public JButton btnCancelarOrden, btnCompletarOrden;
+
     List<MantenimientoSalidaDTO> mantenimientosPendientes;
     
-    
+    IInmuebleBO inmuebleBO = new InmuebleBO();
     IMantenimientoBO mantenimientoBO = new MantenimientoBO();
     
     /**
@@ -44,7 +52,6 @@ public class PantallaSolicitudPendientes extends javax.swing.JPanel {
     public PantallaSolicitudPendientes(FramePrincipal framePrincipal, ControlObjetos controlObjetos) {
         this.framePrincipal = framePrincipal;
         this.controlObjetos = controlObjetos;
-        
         setLayout(null);
         iniciarComponentes();
     }
@@ -71,86 +78,204 @@ public class PantallaSolicitudPendientes extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void iniciarComponentes() {
-        Font fuenteTitulo = new Font("Arial", Font.BOLD, 26);
-        Font fuenteLabels = new Font("Arial", Font.PLAIN, 22);
+        Font fuenteTitulo = new Font("Arial", Font.BOLD, 24);
+        Font fuenteLabels = new Font("Arial", Font.PLAIN, 20);
+        Font fuenteCampos = new Font("Arial", Font.PLAIN, 18);
+        Color colorBloqueado = new Color(230, 230, 230);
 
         // --- TÍTULO ---
-        JLabel lblTitulo = new JLabel("Consultar solicitudes de mantenimiento:");
+        JLabel lblTitulo = new JLabel("Generar orden de servicio:");
         lblTitulo.setFont(fuenteTitulo);
-        lblTitulo.setBounds(50, 40, 600, 40);
+        lblTitulo.setBounds(50, 30, 400, 35);
         add(lblTitulo);
 
-        JLabel lblSolicitudes = new JLabel("Solicitudes:");
+        // --- COMBOBOX SOLICITUDES ---
+        JLabel lblSolicitudes = new JLabel("Solicitudes pendientes:");
         lblSolicitudes.setFont(fuenteLabels);
-        lblSolicitudes.setBounds(50, 90, 200, 30);
+        lblSolicitudes.setBounds(50, 80, 400, 25);
         add(lblSolicitudes);
 
-        // --- CONFIGURACIÓN DE LA TABLA ---
-        String[] columnas = {"Dirección", "Descripción", "Prioridad", "Costo"};
-        // El modelo de la tabla evita que las celdas sean editables directamente
-        modeloTabla = new DefaultTableModel(columnas, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
+        cbSolicitudes = new JComboBox<>(); // <--- Instancia primero
+        cbSolicitudes.setBounds(50, 115, 600, 40);
+        cbSolicitudes.setFont(fuenteCampos);
+        cbSolicitudes.setBackground(Color.WHITE);
+        add(cbSolicitudes);
+
+        // --- DIRECCIÓN ---
+        JLabel lblDireccion = new JLabel("Dirección:");
+        lblDireccion.setFont(fuenteLabels);
+        lblDireccion.setBounds(50, 175, 200, 25);
+        add(lblDireccion);
+
+        txtDireccion = new JTextField(); // <--- Instancia primero
+        txtDireccion.setBounds(50, 210, 380, 45);
+        txtDireccion.setFont(fuenteCampos);
+        txtDireccion.setEditable(false);
+        txtDireccion.setBackground(colorBloqueado);
+        add(txtDireccion);
+
+
+        // --- DESCRIPCIÓN ---
+        JLabel lblDesc = new JLabel("Descripción:");
+        lblDesc.setFont(fuenteLabels);
+        lblDesc.setBounds(50, 275, 200, 25);
+        add(lblDesc);
+
+        txtDescripcion = new JTextField(); // <--- Instancia primero
+        txtDescripcion.setBounds(50, 310, 840, 45);
+        txtDescripcion.setFont(fuenteCampos);
+        txtDescripcion.setEditable(false);
+        txtDescripcion.setBackground(colorBloqueado);
+        add(txtDescripcion);
+
+        // --- NOTAS ADICIONALES ---
+        JLabel lblNotas = new JLabel("Notas adicionales:");
+        lblNotas.setFont(fuenteLabels);
+        lblNotas.setBounds(50, 375, 250, 25);
+        add(lblNotas);
+
+        txtNotasAdicionales = new JTextArea(); // <--- Instancia primero
+        txtNotasAdicionales.setFont(fuenteCampos);
+        txtNotasAdicionales.setLineWrap(true);
+        txtNotasAdicionales.setWrapStyleWord(true);
+
+        JScrollPane scrollNotas = new JScrollPane(txtNotasAdicionales);
+        scrollNotas.setBounds(50, 410, 600, 140);
+        add(scrollNotas);
+
+        // --- BOTONES ---
+        btnCancelarOrden = new JButton("Cancelar orden");
+        btnCancelarOrden.setBounds(680, 420, 220, 45);
+        btnCancelarOrden.setFont(new Font("Arial", Font.PLAIN, 18));
+        btnCancelarOrden.setBackground(new Color(160, 160, 160));
+        add(btnCancelarOrden);
+
+        btnCompletarOrden = new JButton("Completar orden");
+        btnCompletarOrden.setBounds(680, 490, 220, 45);
+        btnCompletarOrden.setFont(new Font("Arial", Font.PLAIN, 18));
+        btnCompletarOrden.setBackground(new Color(160, 160, 160));
+        add(btnCompletarOrden);
+
+        // --- EVENTO DEL COMBOBOX ---
+        cbSolicitudes.addActionListener(e -> actualizarDetalles());
+        
+        btnCancelarOrden.addActionListener(e -> {
+            MantenimientoSalidaDTO seleccionado = (MantenimientoSalidaDTO) cbSolicitudes.getSelectedItem();
+
+            if (seleccionado == null) {
+                JOptionPane.showMessageDialog(this, "Por favor, seleccione una solicitud para cancelar.");
+                return;
             }
-        };
 
-        tablaSolicitudes = new JTable(modeloTabla);
-        tablaSolicitudes.setFont(new Font("Arial", Font.PLAIN, 16));
-        tablaSolicitudes.setRowHeight(30); // Filas más altas para que respiren
-        tablaSolicitudes.getTableHeader().setFont(new Font("Arial", Font.BOLD, 18));
+            int respuesta = JOptionPane.showConfirmDialog(this,
+                    "¿Está seguro de que desea cancelar esta solicitud de mantenimiento?",
+                    "Confirmar Cancelación", JOptionPane.YES_NO_OPTION);
 
-        // JScrollPane para que la tabla tenga barras de desplazamiento y se vea profesional
-        JScrollPane scrollPane = new JScrollPane(tablaSolicitudes);
-        scrollPane.setBounds(50, 140, 1000, 350); 
-        add(scrollPane);
+            if (respuesta == JOptionPane.YES_OPTION) {
+                try {
+                    MantenimientoDTO mantenimientoActualizado = new MantenimientoDTO();
+                    mantenimientoActualizado.setIdMantenimiento(seleccionado.getIdMantenimiento());
+                    mantenimientoActualizado.setEstado("cancelado");
+                    mantenimientoActualizado.setNotas(txtNotasAdicionales.getText());
+                    
+                    mantenimientoBO.finalizarMantenimiento(mantenimientoActualizado);
 
-        // --- BOTÓN SELECCIONAR ---
-        btnSeleccionar = new JButton("Seleccionar");
-        btnSeleccionar.setBounds(850, 520, 200, 50);
-        btnSeleccionar.setFont(fuenteLabels);
-        btnSeleccionar.setBackground(new Color(140, 140, 140));
-        btnSeleccionar.setFocusable(false);
-        add(btnSeleccionar);
+                    JOptionPane.showMessageDialog(this, "Solicitud cancelada con éxito.");
+                    limpiarPantalla();
+                    framePrincipal.cambiarPantalla("PanelGestorArrendamiento");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Error al cancelar: " + ex.getMessage());
+                }
+            }
+        });
 
-        // --- LÓGICA DEL BOTÓN ---
-        btnSeleccionar.addActionListener(e -> {
-            int filaSeleccionada = tablaSolicitudes.getSelectedRow();
-            
-            if (filaSeleccionada != -1) {
-                
-                String direccion = (String) modeloTabla.getValueAt(filaSeleccionada, 0);
-                
-                System.out.println("Seleccionado: " + direccion);
-                
+        // --- BOTÓN COMPLETAR ORDEN ---
+        btnCompletarOrden.addActionListener(e -> {
+            MantenimientoSalidaDTO seleccionado = (MantenimientoSalidaDTO) cbSolicitudes.getSelectedItem();
+            String notas = txtNotasAdicionales.getText().trim();
 
-                JOptionPane.showMessageDialog(this, "Redirigiendo a detalles de: " + direccion);
-            } else {
-                JOptionPane.showMessageDialog(this, "Por favor, seleccione una solicitud de la tabla.");
+            if (seleccionado == null) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar una solicitud.");
+                return;
+            }
+
+            if (notas.isEmpty()) {
+                int continuar = JOptionPane.showConfirmDialog(this,
+                        "¿Desea completar la orden sin agregar notas adicionales?",
+                        "Notas vacías", JOptionPane.YES_NO_OPTION);
+                if (continuar != JOptionPane.YES_OPTION) {
+                    return;
+                }
+            }
+
+            try {
+                MantenimientoDTO mantenimientoActualizado = new MantenimientoDTO();
+                mantenimientoActualizado.setIdMantenimiento(seleccionado.getIdMantenimiento());
+                mantenimientoActualizado.setEstado("completado");
+                mantenimientoActualizado.setNotas(txtNotasAdicionales.getText());
+
+                mantenimientoBO.finalizarMantenimiento(mantenimientoActualizado);
+
+                JOptionPane.showMessageDialog(this, "Solicitud completada con éxito.");
+                limpiarPantalla();
+                framePrincipal.cambiarPantalla("PanelGestorArrendamiento");
+
+                JOptionPane.showMessageDialog(this, "Orden de servicio completada exitosamente.");
+
+                framePrincipal.refrescarPantallaGestor();
+                framePrincipal.cambiarPantalla("PanelGestorArrendamiento");
+                limpiarPantalla();
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error al completar la orden: " + ex.getMessage());
             }
         });
     }
-    
-    public void cargarTabla() {
-        modeloTabla.setRowCount(0);
+
+
+    public void cargarSolicitudes() {
+        System.out.println("hola");
+        
         try{
             mantenimientosPendientes = mantenimientoBO.listarMantenimientosPendientes();
+            System.out.println("Lista solicitudes actualizada.");
         }
         catch(NegocioException ex){
             System.out.println(ex.getMessage());
         }
         
-        for (MantenimientoSalidaDTO mant : mantenimientosPendientes) {
+        cbSolicitudes.removeAllItems();
+        for (MantenimientoSalidaDTO m : mantenimientosPendientes) {
+            cbSolicitudes.addItem(m);
+        }
+    }
 
-                Object[] fila = {
-                    mant.idInmueble(),
-                    mant.descripcion(),
-                    mant.prioridad(),
-                    mant.costo()
-                };
-                
-                modeloTabla.addRow(fila);
+
+    public void actualizarDetalles() {
+        
+        MantenimientoSalidaDTO seleccionado = (MantenimientoSalidaDTO) cbSolicitudes.getSelectedItem();
+        try {
+            InmuebleSalidaDTO objetoInmueble = inmuebleBO.buscarInmueblePorId(seleccionado.getIdInmueble());
+
+            if (seleccionado != null) {
+                txtDireccion.setText(objetoInmueble.direccion());
+                txtDescripcion.setText(seleccionado.getDescripcion());
             }
+        } catch (NegocioException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        
+    }
+
+    
+    private void limpiarPantalla() {
+        txtDireccion.setText("");
+        txtDescripcion.setText("");
+        txtNotasAdicionales.setText("");
+        if (cbSolicitudes.getItemCount() > 0) {
+            cbSolicitudes.setSelectedIndex(0);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

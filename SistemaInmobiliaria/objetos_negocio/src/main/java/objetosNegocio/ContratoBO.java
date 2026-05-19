@@ -44,7 +44,7 @@ public class ContratoBO implements IContratoBO{
             return contrato;
         }
         catch(PersistenciaException ex){
-            throw new NegocioException("", ex);
+            throw new NegocioException("No se pudo crear el contrato", ex);
         }
     }
 
@@ -57,7 +57,7 @@ public class ContratoBO implements IContratoBO{
         
         }
         catch(PersistenciaException ex){
-            throw new NegocioException("", ex);
+            throw new NegocioException("No se pudo editar el contrato.", ex);
         }
     }
 

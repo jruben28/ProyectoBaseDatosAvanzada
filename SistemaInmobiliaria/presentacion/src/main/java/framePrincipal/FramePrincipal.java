@@ -33,7 +33,6 @@ public class FramePrincipal extends javax.swing.JFrame {
     
     private JPanel contenedor;
     public ControlObjetos controlObjetos = new ControlObjetos();
-    private IInmuebleBO inmuebleBO= new InmuebleBO();
     
     private CardLayout cardLayout;
     private PantallaGestorArrendamiento gestorArrendamiento;
@@ -168,7 +167,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         item2.addActionListener(e -> {
             refrescarPantallaGenerarOrden();
             cardLayout.show(contenedor, "PanelGenerarOrden");});
-        item3.addActionListener(e -> cardLayout.show(contenedor, "PanelConsultarSolicitudes"));
+        item3.addActionListener(e -> {
+            refrescarPantallaSolicitudesPendientes();
+            cardLayout.show(contenedor, "PanelConsultarPendientes");
+
+        });
         item4.addActionListener(e -> {
             refrescarPantallaFinalizarContrato();
             cardLayout.show(contenedor, "PanelFinalizarContrato");});
@@ -212,6 +215,13 @@ public class FramePrincipal extends javax.swing.JFrame {
     public void refrescarPantallaFinalizarContrato(){
         if (finalizarContrato != null) {
             finalizarContrato.actualizarListaRentadas();
+        }
+    
+    }
+    
+    public void refrescarPantallaSolicitudesPendientes(){
+        if (consultarPendientes != null) {
+            consultarPendientes.cargarSolicitudes();
         }
     
     }

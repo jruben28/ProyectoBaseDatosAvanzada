@@ -139,15 +139,19 @@ public class PantallaGestorArrendamiento extends javax.swing.JPanel {
             
             String seleccion = (String) cbPropiedades.getSelectedItem();
             InmuebleSalidaDTO inmueble = obtenerDTO(seleccion);
-            controlObjetos.setInmuebleSeleccionado(inmueble);
-            lblTipoDato.setText(inmueble.tipo());
-            lblDireccionDato.setText(inmueble.direccion());
-            lblRentaDato.setText(inmueble.rentaMensual().toString());
+            if (inmueble != null) {
+                controlObjetos.setInmuebleSeleccionado(inmueble);
+                lblTipoDato.setText(inmueble.tipo());
+                lblDireccionDato.setText(inmueble.direccion());
+                lblRentaDato.setText(inmueble.rentaMensual().toString());
+            }
 
         });
         
         btnRegistrar.addActionListener(e -> {
-            
+            lblTipoDato.setText(" ");
+            lblDireccionDato.setText(" ");
+            lblRentaDato.setText(" ");
             frame.cambiarPantalla("PanelRegistrarInquilino");
         
         });
