@@ -54,4 +54,6 @@ public interface IInmuebleDAO {
      * @throws PersistenciaException 
      */
     public List<Inmueble> listarInmueblesRentados() throws PersistenciaException;
+    
+    public boolean quitarInquilino(String idInmueble) throws PersistenciaException;
 }

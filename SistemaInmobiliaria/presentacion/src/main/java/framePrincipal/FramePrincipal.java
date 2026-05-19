@@ -5,6 +5,7 @@
 package framePrincipal;
 
 import dtos.salida.InmuebleSalidaDTO;
+import excepcion.NegocioException;
 import java.awt.CardLayout;
 import java.awt.Color;
 import javax.swing.JFrame;
@@ -14,11 +15,15 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import objetosNegocio.IInmuebleBO;
+import objetosNegocio.InmuebleBO;
 import paneles.PantallaConsultarSolicitudes;
+import paneles.PantallaFinalizarContrato;
 import paneles.PantallaGenerarOrden;
 import paneles.PantallaGestorArrendamiento;
 import paneles.PantallaRegistrarInquilino;
 import paneles.PantallaResumenPlanPagos;
+import paneles.PantallaSolicitudPendientes;
 
 /**
  *
@@ -28,6 +33,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     
     private JPanel contenedor;
     public ControlObjetos controlObjetos = new ControlObjetos();
+    private IInmuebleBO inmuebleBO= new InmuebleBO();
     
     private CardLayout cardLayout;
     private PantallaGestorArrendamiento gestorArrendamiento;
@@ -37,9 +43,9 @@ public class FramePrincipal extends javax.swing.JFrame {
     
     private PantallaGenerarOrden generarOrden;
     private PantallaConsultarSolicitudes consultarSolicitudes;
-//    private PantallaSolicitudPendiente consultarPendientes;
+    private PantallaFinalizarContrato finalizarContrato;
+    private PantallaSolicitudPendientes consultarPendientes;
     
-//    private PantallaGestorContratos gestorContratos;
     
 
     /**
@@ -126,16 +132,20 @@ public class FramePrincipal extends javax.swing.JFrame {
         contenedor = new JPanel(cardLayout);
 
         gestorArrendamiento = new PantallaGestorArrendamiento(this, controlObjetos);
-        generarOrden = new PantallaGenerarOrden();
+        generarOrden = new PantallaGenerarOrden(this, controlObjetos);
         consultarSolicitudes = new PantallaConsultarSolicitudes();
         registrarInquilino = new PantallaRegistrarInquilino(this, controlObjetos);
         planPagos = new PantallaResumenPlanPagos(this, controlObjetos);
+        finalizarContrato = new PantallaFinalizarContrato(this, controlObjetos);
+        consultarPendientes = new PantallaSolicitudPendientes(this, controlObjetos);
 
         contenedor.add(gestorArrendamiento, "PanelGestorArrendamiento");
         contenedor.add(generarOrden, "PanelGenerarOrden");
         contenedor.add(consultarSolicitudes, "PanelConsultarSolicitudes");
         contenedor.add(registrarInquilino, "PanelRegistrarInquilino");
         contenedor.add(planPagos, "PanelPlanPagos");
+        contenedor.add(finalizarContrato, "PanelFinalizarContrato");
+        contenedor.add(consultarPendientes, "PanelConsultarPendientes");
         
 
         this.add(contenedor);
@@ -155,8 +165,13 @@ public class FramePrincipal extends javax.swing.JFrame {
             refrescarPantallaGestor();
             cardLayout.show(contenedor, "PanelGestorArrendamiento");
         });
-        item2.addActionListener(e -> cardLayout.show(contenedor, "PanelGenerarOrden"));
+        item2.addActionListener(e -> {
+            refrescarPantallaGenerarOrden();
+            cardLayout.show(contenedor, "PanelGenerarOrden");});
         item3.addActionListener(e -> cardLayout.show(contenedor, "PanelConsultarSolicitudes"));
+        item4.addActionListener(e -> {
+            refrescarPantallaFinalizarContrato();
+            cardLayout.show(contenedor, "PanelFinalizarContrato");});
         
         menu.add(item1);
         menu2.add(item2);
@@ -186,7 +201,20 @@ public class FramePrincipal extends javax.swing.JFrame {
     
     }
 
+    public void refrescarPantallaGenerarOrden() {
+        if (generarOrden != null) {
 
+            generarOrden.actualizarListaInmuebles();
+
+        }
+    }
+    
+    public void refrescarPantallaFinalizarContrato(){
+        if (finalizarContrato != null) {
+            finalizarContrato.actualizarListaRentadas();
+        }
+    
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

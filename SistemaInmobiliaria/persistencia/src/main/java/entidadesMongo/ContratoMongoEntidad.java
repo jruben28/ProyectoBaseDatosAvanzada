@@ -5,6 +5,7 @@
 package entidadesMongo;
 
 import java.time.Instant;
+import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
 
 /**
@@ -12,6 +13,8 @@ import org.bson.types.ObjectId;
  * @author joser
  */
 public class ContratoMongoEntidad {
+    @BsonId
+    private ObjectId id;
     private Instant fechaInicio;
     private Instant fechaFin;
     private ObjectId idInmueble;
@@ -26,6 +29,14 @@ public class ContratoMongoEntidad {
         this.adeudo = adeudo;
         this.motivo = motivo;
         this.observaciones = observaciones;
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 
     public ContratoMongoEntidad(Instant fechaInicio, ObjectId idInmueble) {

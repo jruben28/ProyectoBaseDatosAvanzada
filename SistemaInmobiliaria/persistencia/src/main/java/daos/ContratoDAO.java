@@ -73,7 +73,8 @@ public class ContratoDAO implements IContratoDAO{
                             set("observaciones", contrato.getObservaciones())
                     )
             );
-
+            
+            System.out.println("llegamos aca" + (resultado.getModifiedCount() > 0));
             return resultado.getModifiedCount() > 0;
 
         } catch (MongoException ex) {
@@ -85,19 +86,20 @@ public class ContratoDAO implements IContratoDAO{
 
     @Override
     public Contrato buscarContrato(String idInmueble) throws PersistenciaException {
-        ObjectId id = contratoAdapter.convertirStringAObjectId(idInmueble);
+        ObjectId id = contratoAdapter.convertirStringAObjectId(idInmueble.trim());
 
         if (id == null) {
             return null;
         }
 
         try {
+            
             ContratoMongoEntidad entidadMongo = coleccionContratos
-                    .find(and(
-                            eq("idInmueble", id),
-                            eq("fechaFin", null)
-                    ))
+                    .find(
+                            eq("idInmueble", id)
+                    )
                     .first();
+
 
             return contratoAdapter.convertirADominio(entidadMongo);
 

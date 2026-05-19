@@ -142,5 +142,17 @@ public class InmuebleBO implements IInmuebleBO{
                     
         }
     }
+
+    @Override
+    public boolean quitarInquilino(String idInmueble) throws NegocioException {
+        try{
+            return inmuebleDAO.quitarInquilino(idInmueble);
+        
+        }
+        catch(PersistenciaException ex){
+            LOG.log(Level.WARNING, "Error en capa de negocio al querer quitar a un inquilino.");
+            throw new NegocioException("No se pudo listar los inmuebles rentados.", ex);
+        }
+    }
     
 }

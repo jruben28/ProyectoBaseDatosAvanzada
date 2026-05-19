@@ -4,17 +4,51 @@
  */
 package paneles;
 
+import dtos.comunes.MantenimientoDTO;
+import dtos.entrada.RegistrarMantenimientoDTO;
+import dtos.salida.InmuebleSalidaDTO;
+import excepcion.NegocioException;
+import framePrincipal.ControlObjetos;
+import framePrincipal.FramePrincipal;
+import java.awt.Color;
+import java.awt.Font;
+import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import objetosNegocio.IInmuebleBO;
+import objetosNegocio.IMantenimientoBO;
+import objetosNegocio.InmuebleBO;
+import objetosNegocio.MantenimientoBO;
+
 /**
  *
  * @author joser
  */
 public class PantallaGenerarOrden extends javax.swing.JPanel {
 
+    FramePrincipal framePrincipal;
+    ControlObjetos controlObjetos;
+    IInmuebleBO inmuebleBO = new InmuebleBO();
+    IMantenimientoBO mantenimientoBO = new MantenimientoBO();
+    List<InmuebleSalidaDTO> inmueblesArrendados;
+    
+    public JComboBox<String> cbInmuebles, cbPrioridad, cbCausa;
+    public JTextField txtCosto;
+    public JTextArea txtDescripcion;
+    public JButton btnGenerar;
     /**
      * Creates new form PantallaGenerarOrden
      */
-    public PantallaGenerarOrden() {
-        initComponents();
+    public PantallaGenerarOrden(FramePrincipal framePrincipal, ControlObjetos controlObjetos) {
+        this.framePrincipal = framePrincipal;
+        this.controlObjetos = controlObjetos;
+        setLayout(null);
+        iniciarComponentes();
     }
 
     /**
@@ -38,7 +72,151 @@ public class PantallaGenerarOrden extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void iniciarComponentes() {
+        Font fuenteTitulo = new Font("Arial", Font.BOLD, 26);
+        Font fuenteLabels = new Font("Arial", Font.PLAIN, 22);
+        Font fuenteCampos = new Font("Arial", Font.PLAIN, 18);
 
+        // --- TÍTULO ---
+        JLabel lblTitulo = new JLabel("Generar orden de servicio:");
+        lblTitulo.setFont(fuenteTitulo);
+        lblTitulo.setBounds(50, 40, 400, 40);
+        add(lblTitulo);
+
+        // --- COMBO INMUEBLES ---
+        JLabel lblPropiedades = new JLabel("Propiedades en arrendamiento:");
+        lblPropiedades.setFont(fuenteLabels);
+        lblPropiedades.setBounds(50, 90, 400, 30);
+        add(lblPropiedades);
+
+        cbInmuebles = new JComboBox<>(); // Se llenará mediante un método de actualización
+        cbInmuebles.setBounds(50, 130, 800, 45);
+        cbInmuebles.setFont(fuenteCampos);
+        cbInmuebles.setBackground(Color.WHITE);
+        add(cbInmuebles);
+
+        // --- PRIORIDAD ---
+        JLabel lblPrioridad = new JLabel("Nivel de prioridad:");
+        lblPrioridad.setFont(fuenteLabels);
+        lblPrioridad.setBounds(50, 210, 250, 30);
+        add(lblPrioridad);
+
+        String[] prioridades = {"Baja", "Media", "Alta"};
+        cbPrioridad = new JComboBox<>(prioridades);
+        cbPrioridad.setBounds(50, 250, 300, 45);
+        cbPrioridad.setFont(fuenteCampos);
+        cbPrioridad.setBackground(Color.WHITE);
+        add(cbPrioridad);
+
+        // --- COSTO ---
+        JLabel lblCosto = new JLabel("Costo aproximado:");
+        lblCosto.setFont(fuenteLabels);
+        lblCosto.setBounds(400, 210, 250, 30);
+        add(lblCosto);
+
+        txtCosto = new JTextField();
+        txtCosto.setBounds(400, 250, 300, 45);
+        txtCosto.setFont(fuenteCampos);
+        add(txtCosto);
+
+        // --- CAUSA ---
+        JLabel lblCausa = new JLabel("Causa:");
+        lblCausa.setFont(fuenteLabels);
+        lblCausa.setBounds(750, 210, 200, 30);
+        add(lblCausa);
+
+        String[] causas = {"Desgaste", "Mal uso"};
+        cbCausa = new JComboBox<>(causas);
+        cbCausa.setBounds(750, 250, 300, 45);
+        cbCausa.setFont(fuenteCampos);
+        cbCausa.setBackground(Color.WHITE);
+        add(cbCausa);
+
+        // --- DESCRIPCIÓN ---
+        JLabel lblDesc = new JLabel("Descripcion:");
+        lblDesc.setFont(fuenteLabels);
+        lblDesc.setBounds(50, 330, 200, 30);
+        add(lblDesc);
+
+        txtDescripcion = new JTextArea();
+        txtDescripcion.setFont(fuenteCampos);
+        txtDescripcion.setLineWrap(true);
+        txtDescripcion.setWrapStyleWord(true);
+        
+        // El JTextArea necesita un JScrollPane para verse como en la imagen y tener scroll
+        JScrollPane scrollDesc = new JScrollPane(txtDescripcion);
+        scrollDesc.setBounds(50, 370, 700, 200);
+        add(scrollDesc);
+
+        // --- BOTÓN GENERAR ---
+        btnGenerar = new JButton("Generar orden");
+        btnGenerar.setBounds(800, 520, 300, 60);
+        btnGenerar.setFont(fuenteLabels);
+        btnGenerar.setBackground(new Color(140, 140, 140));
+        btnGenerar.setFocusable(false);
+        add(btnGenerar);
+
+        // --- LÓGICA DEL BOTÓN ---
+        btnGenerar.addActionListener(e -> {
+            if(cbInmuebles.getSelectedItem() == null) {
+                JOptionPane.showMessageDialog(this, "Seleccione una propiedad");
+                return;
+            }
+            
+            try{
+                RegistrarMantenimientoDTO mantenimiento = new RegistrarMantenimientoDTO();
+                String seleccion = (String) cbInmuebles.getSelectedItem();
+                InmuebleSalidaDTO inmueble = obtenerDTO(seleccion);
+                mantenimiento.setIdInmueble(inmueble.idInmueble());
+                mantenimiento.setDescripcion(txtDescripcion.getText());
+                String prioridad = (String) cbPrioridad.getSelectedItem();
+                mantenimiento.setPrioridad(prioridad);
+                String tipo = (String) cbCausa.getSelectedItem();
+                mantenimiento.setTipo(tipo);
+                mantenimiento.setEstado("pendiente");
+                mantenimiento.setCosto(Float.parseFloat(txtCosto.getText()) );
+                mantenimiento.setNotas(txtDescripcion.getText());
+                
+                
+                mantenimientoBO.crearMantenimiento(mantenimiento);
+            }catch(NegocioException ex){
+                JOptionPane.showMessageDialog(this, "Error al hacer la orden.");
+                System.out.println(ex.getMessage());
+            }
+            
+            JOptionPane.showMessageDialog(this, "Orden de servicio generada correctamente.");
+            limpiarCampos();
+        });
+    }
+    
+    public void actualizarListaInmuebles() {
+        cbInmuebles.removeAllItems();
+        try{
+        inmueblesArrendados = inmuebleBO.listarInmueblesRentados();
+        }catch(NegocioException ex){
+            System.out.println(ex.getMessage());
+        }
+                
+        for (InmuebleSalidaDTO item : inmueblesArrendados) {
+            cbInmuebles.addItem(item.direccion());
+        }
+    }
+
+    private void limpiarCampos() {
+        txtCosto.setText("");
+        txtDescripcion.setText("");
+        cbPrioridad.setSelectedIndex(0);
+        cbCausa.setSelectedIndex(0);
+    }
+
+    private InmuebleSalidaDTO obtenerDTO(String calle) {
+        for (InmuebleSalidaDTO inmueble : inmueblesArrendados) {
+            if (inmueble.direccion().equalsIgnoreCase(calle)) {
+                return inmueble;
+            }
+        }
+        return null;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

@@ -134,16 +134,16 @@ public class MantenimientoBO implements IMantenimientoBO{
     
     public void validarCamposRegistrarMantenimientoDTO(RegistrarMantenimientoDTO mantenimiento) throws IllegalArgumentException {
 
-        String descripcion = mantenimiento.descripcion();
-        String prioridad  = mantenimiento.prioridad();
-        String tipo = mantenimiento.tipo();
-        String estado = mantenimiento.estado();
-        Float costo = mantenimiento.costo();
+        String descripcion = mantenimiento.getDescripcion();
+        String prioridad  = mantenimiento.getPrioridad();
+        String tipo = mantenimiento.getTipo();
+        String estado = mantenimiento.getEstado();
+        Float costo = mantenimiento.getCosto();
                 ;
         
         // 1. Validación de campos obligatorios (Strings)
         // Verificamos que no sean nulos y que no estén vacíos tras quitar espacios
-        if (mantenimiento.idInmueble() == null || mantenimiento.idInmueble().isEmpty()) {
+        if (mantenimiento.getIdInmueble() == null || mantenimiento.getIdInmueble().isEmpty()) {
             throw new IllegalArgumentException("El ID del inmueble es obligatorio.");
         }
         if (descripcion == null || descripcion.trim().isEmpty()) {

@@ -139,7 +139,6 @@ public class PantallaGestorArrendamiento extends javax.swing.JPanel {
             
             String seleccion = (String) cbPropiedades.getSelectedItem();
             InmuebleSalidaDTO inmueble = obtenerDTO(seleccion);
-            System.out.println(inmueble.toString());
             controlObjetos.setInmuebleSeleccionado(inmueble);
             lblTipoDato.setText(inmueble.tipo());
             lblDireccionDato.setText(inmueble.direccion());

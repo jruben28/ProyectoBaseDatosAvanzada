@@ -54,14 +54,14 @@ public class MantenimientoNegocioAdapter {
         
         Mantenimiento mantenimiento = new Mantenimiento();
         
-        mantenimiento.setIdMantenimiento(mantenimientoDTO.idMantenimiento());
-        mantenimiento.setIdInmueble(mantenimientoDTO.idInmueble());
-        mantenimiento.setDescripcion(mantenimientoDTO.descripcion());
-        mantenimiento.setPrioridad(mantenimientoDTO.prioridad());
-        mantenimiento.setTipo(mantenimientoDTO.tipo());
-        mantenimiento.setEstado(mantenimientoDTO.estado());
-        mantenimiento.setCosto(mantenimientoDTO.costo());
-        mantenimiento.setNotas(mantenimientoDTO.notas());
+        mantenimiento.setIdMantenimiento(mantenimientoDTO.getIdMantenimiento());
+        mantenimiento.setIdInmueble(mantenimientoDTO.getIdInmueble());
+        mantenimiento.setDescripcion(mantenimientoDTO.getDescripcion());
+        mantenimiento.setPrioridad(mantenimientoDTO.getPrioridad());
+        mantenimiento.setTipo(mantenimientoDTO.getTipo());
+        mantenimiento.setEstado(mantenimientoDTO.getEstado());
+        mantenimiento.setCosto(mantenimientoDTO.getCosto());
+        mantenimiento.setNotas(mantenimientoDTO.getNotas());
         
         return mantenimiento;
         

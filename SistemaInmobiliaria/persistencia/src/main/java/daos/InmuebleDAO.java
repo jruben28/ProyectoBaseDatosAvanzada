@@ -204,5 +204,28 @@ public class InmuebleDAO implements IInmuebleDAO{
         }
         
     }
+
+    @Override
+    public boolean quitarInquilino(String idInmueble) throws PersistenciaException {
+        ObjectId id = inmuebleAdapter.convertirStringAObjectId(idInmueble);
+        
+        if (id == null) {
+            return false;
+        }
+        
+        try {
+            UpdateResult resultado = coleccionInmuebles
+                    .updateOne(
+                            eq("_id", id), set("inquilino", null));
+            
+            
+            return resultado.getModifiedCount() > 0;
+
+        } catch (MongoException ex) {
+            throw new PersistenciaException(
+                    "No fue posible obtener el inmueble por id.", ex
+            );
+        }
+    }
     
 }

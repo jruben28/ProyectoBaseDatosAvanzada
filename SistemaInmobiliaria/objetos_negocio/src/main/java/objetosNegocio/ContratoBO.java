@@ -52,7 +52,7 @@ public class ContratoBO implements IContratoBO{
     public boolean editarContrato(ContratoDTO contrato) throws NegocioException {
         try{
             //validar datos contrato
-            
+            System.out.println("llegamos aca");
             return contratoDAO.editarContrado(contratoAdaper.DTOAEntidad(contrato));
         
         }

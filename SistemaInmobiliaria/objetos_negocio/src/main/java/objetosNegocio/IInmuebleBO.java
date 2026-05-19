@@ -47,4 +47,6 @@ public interface IInmuebleBO{
      * @throws NegocioException 
      */
     List<InmuebleSalidaDTO> listarInmueblesRentados() throws NegocioException;
+    
+    boolean quitarInquilino(String idInmueble) throws NegocioException;
 }
