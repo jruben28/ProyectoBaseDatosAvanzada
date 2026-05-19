@@ -13,6 +13,24 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>objetos_negocio</artifactId>
             <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.mongodb</groupId>
+                    <artifactId>mongodb-driver-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.mongodb</groupId>
+                    <artifactId>mongodb-driver-sync</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com</groupId>
+                    <artifactId>persistencia</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com</groupId>
+                    <artifactId>dominio</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>

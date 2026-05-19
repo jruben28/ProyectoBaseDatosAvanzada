@@ -130,5 +130,17 @@ public class InmuebleBO implements IInmuebleBO{
             throw new NegocioException("Telefono no valido");
         }
     }
+
+    @Override
+    public List<InmuebleSalidaDTO> listarInmueblesRentados() throws NegocioException {
+        try{
+            return inmuebleAdapter.entidadesASalidas(inmuebleDAO.listarInmueblesRentados());
+        }
+        catch(PersistenciaException ex){
+            LOG.log(Level.WARNING, "Error en capa de negocio al querer listar inmuebles rentados.");
+            throw new NegocioException("No se pudo listar los inmuebles rentados.", ex);
+                    
+        }
+    }
     
 }

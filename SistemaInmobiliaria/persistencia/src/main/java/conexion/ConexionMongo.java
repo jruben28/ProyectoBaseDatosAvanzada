@@ -10,7 +10,9 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import entidadesMongo.ContratoMongoEntidad;
 import entidadesMongo.InmuebleMongoEntidad;
+import entidadesMongo.MantenimientoMongoEntidad;
 import org.bson.codecs.configuration.CodecProvider;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
@@ -26,6 +28,7 @@ public class ConexionMongo {
         private static final String NOMBRE_BASE_DATOS = "inmobiliaria";
     private static final String COLECCION_INMOBILIARIA = "inmuebles";
     private static final String COLECCION_MANTENIMIENTO = "mantenimientos";
+    private static final String COLECCION_CONTRATO = "contratos";
     
     private static MongoClient cliente;
     
@@ -79,10 +82,22 @@ public class ConexionMongo {
     }
     
     
-// mausqueherramienta que me servira más tarde 
-//    public static MongoCollection<MantenimientoMongoEntidad> obtenerColeccionMantenimiento() {
-//        return obtenerBaseDatos()
-//                .getCollection(COLECCION_MANTENIMIENTO, MantenimientoMongoEntidad.class);
-//    }
+    /**
+     * Obtenemos coleccion de mantenimientos
+     * @return 
+     */
+    public static MongoCollection<MantenimientoMongoEntidad> obtenerColeccionMantenimiento() {
+        return obtenerBaseDatos()
+                .getCollection(COLECCION_MANTENIMIENTO, MantenimientoMongoEntidad.class);
+    }
+    
+    /**
+     * Obtenemos coleccion de contratos
+     * @return 
+     */
+    public static MongoCollection<ContratoMongoEntidad> obtenerColeccionContrato() {
+        return obtenerBaseDatos()
+                .getCollection(COLECCION_CONTRATO, ContratoMongoEntidad.class);
+    }
 
 }

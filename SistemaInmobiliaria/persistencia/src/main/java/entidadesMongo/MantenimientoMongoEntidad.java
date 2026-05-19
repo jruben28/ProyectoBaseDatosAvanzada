@@ -2,15 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package entidades;
+package entidadesMongo;
+
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.types.ObjectId;
 
 /**
  *
  * @author joser
  */
-public class Mantenimiento {
-    private String idMantenimiento;
-    private String idInmueble;
+public class MantenimientoMongoEntidad {
+    @BsonId
+    private ObjectId idMantenimiento;
+    
+    private ObjectId idInmueble;
     private String descripcion;
     private String prioridad;
     private String tipo;
@@ -18,18 +23,7 @@ public class Mantenimiento {
     private Float costo;
     private String notas;
 
-    /**
-     * Constructor con id.
-     * @param idMantenimiento
-     * @param idInmueble
-     * @param descripcion
-     * @param prioridad
-     * @param tipo
-     * @param estado
-     * @param costoMensual
-     * @param notas 
-     */
-    public Mantenimiento(String idMantenimiento, String idInmueble, String descripcion, String prioridad, String tipo, String estado, Float costo, String notas) {
+    public MantenimientoMongoEntidad(ObjectId idMantenimiento, ObjectId idInmueble, String descripcion, String prioridad, String tipo, String estado, Float costo, String notas) {
         this.idMantenimiento = idMantenimiento;
         this.idInmueble = idInmueble;
         this.descripcion = descripcion;
@@ -40,17 +34,7 @@ public class Mantenimiento {
         this.notas = notas;
     }
 
-    /**
-     * Constructor sin id.
-     * @param idInmueble
-     * @param descripcion
-     * @param prioridad
-     * @param tipo
-     * @param estado
-     * @param costoMensual
-     * @param notas 
-     */
-    public Mantenimiento(String idInmueble, String descripcion, String prioridad, String tipo, String estado, Float costoMensual, String notas) {
+    public MantenimientoMongoEntidad(ObjectId idInmueble, String descripcion, String prioridad, String tipo, String estado, Float costo, String notas) {
         this.idInmueble = idInmueble;
         this.descripcion = descripcion;
         this.prioridad = prioridad;
@@ -60,25 +44,24 @@ public class Mantenimiento {
         this.notas = notas;
     }
 
-    /**
-     * Constructor por omisión.
-     */
-    public Mantenimiento() {
+    public MantenimientoMongoEntidad() {
     }
+    
+    
 
-    public String getIdMantenimiento() {
+    public ObjectId getIdMantenimiento() {
         return idMantenimiento;
     }
 
-    public void setIdMantenimiento(String idMantenimiento) {
+    public void setIdMantenimiento(ObjectId idMantenimiento) {
         this.idMantenimiento = idMantenimiento;
     }
 
-    public String getIdInmueble() {
+    public ObjectId getIdInmueble() {
         return idInmueble;
     }
 
-    public void setIdInmueble(String idInmueble) {
+    public void setIdInmueble(ObjectId idInmueble) {
         this.idInmueble = idInmueble;
     }
 
@@ -118,8 +101,8 @@ public class Mantenimiento {
         return costo;
     }
 
-    public void setCosto(Float costoMensual) {
-        this.costo = costoMensual;
+    public void setCosto(Float costo) {
+        this.costo = costo;
     }
 
     public String getNotas() {
@@ -132,7 +115,7 @@ public class Mantenimiento {
 
     @Override
     public String toString() {
-        return "Mantenimiento{" + "idMantenimiento=" + idMantenimiento + ", idInmueble=" + idInmueble + ", descripcion=" + descripcion + ", prioridad=" + prioridad + ", tipo=" + tipo + ", estado=" + estado + ", costo=" + costo + ", notas=" + notas + '}';
+        return "MantenimientoMongoEntidad{" + "idMantenimiento=" + idMantenimiento + ", idInmueble=" + idInmueble + ", descripcion=" + descripcion + ", prioridad=" + prioridad + ", tipo=" + tipo + ", estado=" + estado + ", costo=" + costo + ", notas=" + notas + '}';
     }
     
     

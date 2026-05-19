@@ -153,4 +153,14 @@ public class InmuebleDAOTest {
 
     }
     
+    
+    @Test
+    public void testListarRentados() throws Exception{
+        InmuebleDAO instance = new InmuebleDAO();
+    
+        List<Inmueble> listado = instance.listarInmueblesRentados();
+        
+        System.out.println(listado);
+    }
+    
 }

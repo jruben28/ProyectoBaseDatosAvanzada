@@ -43,7 +43,7 @@ public class PantallaGestorArrendamiento extends javax.swing.JPanel {
         setLayout(null);
         setBackground(new Color(211, 211, 211));
         this.inmuebleBO = new InmuebleBO();
-
+        
         iniciarComponentes();
     }
 
@@ -80,14 +80,14 @@ public class PantallaGestorArrendamiento extends javax.swing.JPanel {
         lblTituloCombo.setFont(fuenteLabels);
         lblTituloCombo.setBounds(80, 50, 400, 30);
         add(lblTituloCombo);
-        try{
+        
+        try {
             cargarListaInmuebles();
-        }
-        catch(NegocioException ex){
+        } catch (NegocioException ex) {
             System.out.println(ex.getMessage());
         }
-        
-        
+
+
         String[] arreglo = stringInmuebles().toArray(new String[0]);
         cbPropiedades = new JComboBox<>(arreglo);
         cbPropiedades.setBounds(80, 90, 800, 45);
@@ -184,7 +184,6 @@ public class PantallaGestorArrendamiento extends javax.swing.JPanel {
         }
         return null;
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

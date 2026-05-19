@@ -7,7 +7,10 @@ package daos;
 import adaptadores.InmueblePersistenciaAdapter;
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
+import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.exists;
+import static com.mongodb.client.model.Filters.ne;
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
 import com.mongodb.client.result.UpdateResult;
@@ -171,6 +174,35 @@ public class InmuebleDAO implements IInmuebleDAO{
         catch(MongoException ex){
             throw new PersistenciaException("Error al registrar inmueble.");
         }
+    }
+
+    /**
+     * Regresa lista de inmuebles rentados.
+     * @return
+     * @throws PersistenciaException 
+     */
+    @Override
+    public List<Inmueble> listarInmueblesRentados() throws PersistenciaException {
+        
+        try {
+            List<InmuebleMongoEntidad> entidadesMongo = coleccionInmuebles
+                    .find(
+                            and(
+                                    eq("estado", false),
+                                    exists("inquilino", true),
+                                    ne("inquilino", null)
+                            )
+                    )
+                    .into(new ArrayList<>());
+            
+            
+            return inmuebleAdapter.convertirListaADominio(entidadesMongo);
+            
+        }
+        catch(MongoException ex){
+            throw new PersistenciaException("Se produjo un error al listar los inmuebles rentados.", ex);
+        }
+        
     }
     
 }

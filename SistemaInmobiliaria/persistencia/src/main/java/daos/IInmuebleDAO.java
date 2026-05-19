@@ -47,4 +47,11 @@ public interface IInmuebleDAO {
      * @throws PersistenciaException 
      */
     public Inmueble registrarInmueble(Inmueble inmueble) throws PersistenciaException;
+    
+    /**
+     * Lista inmuebles que esten no disponibles y tengan un inquilino.
+     * @return
+     * @throws PersistenciaException 
+     */
+    public List<Inmueble> listarInmueblesRentados() throws PersistenciaException;
 }

@@ -41,4 +41,10 @@ public interface IInmuebleBO{
      */
     public boolean registrarInquilino(String idInmueble, InquilinoDTO inquilinoDTO) throws NegocioException;
     
+    /**
+     * Obtiene una lista de inmuebles que estén rentados.
+     * @return
+     * @throws NegocioException 
+     */
+    List<InmuebleSalidaDTO> listarInmueblesRentados() throws NegocioException;
 }
