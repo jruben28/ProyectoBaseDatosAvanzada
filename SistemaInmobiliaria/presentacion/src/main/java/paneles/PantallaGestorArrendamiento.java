@@ -6,6 +6,7 @@ package paneles;
 
 import dtos.salida.InmuebleSalidaDTO;
 import excepcion.NegocioException;
+import framePrincipal.ControlObjetos;
 import framePrincipal.FramePrincipal;
 import java.awt.Color;
 import java.awt.Font;
@@ -26,20 +27,21 @@ import objetosNegocio.InmuebleBO;
 public class PantallaGestorArrendamiento extends javax.swing.JPanel {
     
     private FramePrincipal frame;
+    private ControlObjetos controlObjetos;
     public JComboBox<String> cbPropiedades;
     public JLabel lblTipoDato, lblDireccionDato, lblRentaDato;
     public JButton btnRegistrar;
     private static IInmuebleBO inmuebleBO;
     private List<InmuebleSalidaDTO> listaInmuebles;
-    private InmuebleSalidaDTO inmuebleSeleccionado;
     
     
     /**
      * Creates new form PantallaGestorArrendamiento
      * @param frame
      */
-    public PantallaGestorArrendamiento(FramePrincipal frame) {
+    public PantallaGestorArrendamiento(FramePrincipal frame, ControlObjetos controlObjetos) {
         this.frame = frame;
+        this.controlObjetos = controlObjetos;
         setLayout(null);
         setBackground(new Color(211, 211, 211));
         this.inmuebleBO = new InmuebleBO();
@@ -137,7 +139,8 @@ public class PantallaGestorArrendamiento extends javax.swing.JPanel {
             
             String seleccion = (String) cbPropiedades.getSelectedItem();
             InmuebleSalidaDTO inmueble = obtenerDTO(seleccion);
-            inmuebleSeleccionado = inmueble;
+            System.out.println(inmueble.toString());
+            controlObjetos.setInmuebleSeleccionado(inmueble);
             lblTipoDato.setText(inmueble.tipo());
             lblDireccionDato.setText(inmueble.direccion());
             lblRentaDato.setText(inmueble.rentaMensual().toString());
@@ -145,7 +148,8 @@ public class PantallaGestorArrendamiento extends javax.swing.JPanel {
         });
         
         btnRegistrar.addActionListener(e -> {
-            frame.irARegistroConDatos(inmuebleSeleccionado);
+            
+            frame.cambiarPantalla("PanelRegistrarInquilino");
         
         });
     }
@@ -157,7 +161,7 @@ public class PantallaGestorArrendamiento extends javax.swing.JPanel {
         label.setOpaque(true);
     }
 
-    private List<InmuebleSalidaDTO> cargarListaInmuebles() throws NegocioException{
+    public List<InmuebleSalidaDTO> cargarListaInmuebles() throws NegocioException{
         try{
             this.listaInmuebles = inmuebleBO.listarInmueblesDisponibles();
             return inmuebleBO.listarInmueblesDisponibles();
@@ -183,6 +187,26 @@ public class PantallaGestorArrendamiento extends javax.swing.JPanel {
             }
         }
         return null;
+    }
+
+    public void actualizarVista() {
+        try {
+            System.out.println("Actualizando lista de inmuebles...");
+
+            cargarListaInmuebles();
+
+            cbPropiedades.removeAllItems();
+            for (String direccion : stringInmuebles()) {
+                cbPropiedades.addItem(direccion);
+            }
+
+            lblTipoDato.setText(" ");
+            lblDireccionDato.setText(" ");
+            lblRentaDato.setText(" ");
+
+        } catch (NegocioException ex) {
+            System.err.println("Error al actualizar: " + ex.getMessage());
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

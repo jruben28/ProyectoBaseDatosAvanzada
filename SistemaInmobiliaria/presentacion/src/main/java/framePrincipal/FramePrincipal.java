@@ -18,6 +18,7 @@ import paneles.PantallaConsultarSolicitudes;
 import paneles.PantallaGenerarOrden;
 import paneles.PantallaGestorArrendamiento;
 import paneles.PantallaRegistrarInquilino;
+import paneles.PantallaResumenPlanPagos;
 
 /**
  *
@@ -26,11 +27,20 @@ import paneles.PantallaRegistrarInquilino;
 public class FramePrincipal extends javax.swing.JFrame {
     
     private JPanel contenedor;
+    public ControlObjetos controlObjetos = new ControlObjetos();
+    
     private CardLayout cardLayout;
     private PantallaGestorArrendamiento gestorArrendamiento;
+    
+    private PantallaRegistrarInquilino registrarInquilino;
+    private PantallaResumenPlanPagos planPagos;
+    
     private PantallaGenerarOrden generarOrden;
     private PantallaConsultarSolicitudes consultarSolicitudes;
-    private PantallaRegistrarInquilino registrarInquilino;
+//    private PantallaSolicitudPendiente consultarPendientes;
+    
+//    private PantallaGestorContratos gestorContratos;
+    
 
     /**
      * Creates new form FramePrincipal
@@ -115,15 +125,17 @@ public class FramePrincipal extends javax.swing.JFrame {
         cardLayout = new CardLayout();
         contenedor = new JPanel(cardLayout);
 
-        gestorArrendamiento = new PantallaGestorArrendamiento(this);
+        gestorArrendamiento = new PantallaGestorArrendamiento(this, controlObjetos);
         generarOrden = new PantallaGenerarOrden();
         consultarSolicitudes = new PantallaConsultarSolicitudes();
-        registrarInquilino = new PantallaRegistrarInquilino(this);
+        registrarInquilino = new PantallaRegistrarInquilino(this, controlObjetos);
+        planPagos = new PantallaResumenPlanPagos(this, controlObjetos);
 
         contenedor.add(gestorArrendamiento, "PanelGestorArrendamiento");
         contenedor.add(generarOrden, "PanelGenerarOrden");
         contenedor.add(consultarSolicitudes, "PanelConsultarSolicitudes");
         contenedor.add(registrarInquilino, "PanelRegistrarInquilino");
+        contenedor.add(planPagos, "PanelPlanPagos");
         
 
         this.add(contenedor);
@@ -135,29 +147,45 @@ public class FramePrincipal extends javax.swing.JFrame {
         JMenu menu2 = new JMenu("Gestor Servicios");
         JMenuItem item2 = new JMenuItem("Generar orden");
         JMenuItem item3 = new JMenuItem("ConsultarSolicitudes");
+        JMenu menu3 = new JMenu("Gestor contratos");
+        JMenuItem item4 = new JMenuItem("Finalizar contrato");
+                
         
-        item1.addActionListener(e -> cardLayout.show(contenedor, "PanelGestorArrendamiento"));
+        item1.addActionListener(e -> {
+            refrescarPantallaGestor();
+            cardLayout.show(contenedor, "PanelGestorArrendamiento");
+        });
         item2.addActionListener(e -> cardLayout.show(contenedor, "PanelGenerarOrden"));
         item3.addActionListener(e -> cardLayout.show(contenedor, "PanelConsultarSolicitudes"));
         
         menu.add(item1);
         menu2.add(item2);
         menu2.add(item3);
+        menu3.add(item4);
         bar.add(menu);
         bar.add(menu2);
+        bar.add(menu3);
         this.setJMenuBar(bar);
     }
     
     
-    public void irARegistroConDatos(InmuebleSalidaDTO dto) {
-        if (registrarInquilino != null) {
-            registrarInquilino.recibirDTO(dto); 
-            cardLayout.show(contenedor, "PanelRegistrarInquilino"); 
-        }
-    }
     public void cambiarPantalla(String nombre) {
         cardLayout.show(contenedor, nombre);
     }
+
+    public void refrescarPantallaGestor() {
+        if (gestorArrendamiento != null) {
+            gestorArrendamiento.actualizarVista();
+        }
+    }
+    
+    public void refrescarPantallaResumenPlan(){
+        if (planPagos != null) {
+            planPagos.refrescarDatos();
+        }
+    
+    }
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

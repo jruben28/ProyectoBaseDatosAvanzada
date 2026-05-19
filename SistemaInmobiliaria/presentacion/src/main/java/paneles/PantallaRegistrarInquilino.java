@@ -7,6 +7,7 @@ package paneles;
 import dtos.comunes.InquilinoDTO;
 import dtos.salida.InmuebleSalidaDTO;
 import excepcion.NegocioException;
+import framePrincipal.ControlObjetos;
 import framePrincipal.FramePrincipal;
 import java.awt.Color;
 import java.awt.Font;
@@ -25,26 +26,23 @@ public class PantallaRegistrarInquilino extends javax.swing.JPanel {
 
     private FramePrincipal frame;
     private static IInmuebleBO inmuebleBO;
-    private InmuebleSalidaDTO inmuebleSeleccionado;
     public JTextField txtNombre, txtApellidoP, txtApellidoM, txtIngreso, txtTelefono;
     public JButton btnAceptar, btnCancelar;
+    private ControlObjetos controlObjetos;
     
     /**
      * Creates new form PantallaRegistrarInquilino
      * @param frame
      */
-    public PantallaRegistrarInquilino(FramePrincipal frame) {
+    public PantallaRegistrarInquilino(FramePrincipal frame, ControlObjetos controlObjetos) {
         this.frame = frame;
+        this.controlObjetos = controlObjetos;
         inmuebleBO = new InmuebleBO();
         setLayout(null);
         setBackground(new Color(211, 211, 211));
         iniciarComponentes();
     }
 
-    public void recibirDTO(InmuebleSalidaDTO inmueble){
-        this.inmuebleSeleccionado = inmueble;
-
-    }
     
     public void iniciarComponentes(){
         Font fuenteTitulo = new Font("Arial", Font.BOLD, 26);
@@ -134,15 +132,10 @@ public class PantallaRegistrarInquilino extends javax.swing.JPanel {
 
         btnAceptar.addActionListener(e -> {
             InquilinoDTO inquilino = new InquilinoDTO(txtNombre.getText(), txtApellidoP.getText(), txtApellidoM.getText(), Float.parseFloat(txtIngreso.getText()), txtTelefono.getText());
-            try{
-                inmuebleBO.registrarInquilino(inmuebleSeleccionado.idInmueble(), inquilino);
-            }
-            catch(NegocioException ex){
-                System.out.println(ex.getMessage());
-            }
-            JOptionPane.showMessageDialog(this, "Registro exitoso para la propiedad en: " + inmuebleSeleccionado.direccion());
-            this.inmuebleSeleccionado = null;
-            frame.cambiarPantalla("PanelGestorArrendamiento");
+            controlObjetos.setInquilino(inquilino);
+            frame.refrescarPantallaResumenPlan();
+            
+            frame.cambiarPantalla("PanelPlanPagos");
             limpiarCampos();
         });
     };
