@@ -216,7 +216,11 @@ public class InmuebleDAO implements IInmuebleDAO{
         try {
             UpdateResult resultado = coleccionInmuebles
                     .updateOne(
-                            eq("_id", id), set("inquilino", null));
+                            eq("_id", id),
+                            combine(
+                                    set("inquilino", null),
+                                    set("estado", true)
+                            ));
             
             
             return resultado.getModifiedCount() > 0;
